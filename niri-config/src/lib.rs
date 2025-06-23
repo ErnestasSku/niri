@@ -1075,6 +1075,8 @@ pub struct Animations {
     pub screenshot_ui_open: ScreenshotUiOpenAnim,
     #[knuffel(child, default)]
     pub overview_open_close: OverviewOpenCloseAnim,
+    #[knuffel(child, default)]
+    pub focus_ring_animation: FocusRingAnimation,
 }
 
 impl Default for Animations {
@@ -1091,6 +1093,7 @@ impl Default for Animations {
             config_notification_open_close: Default::default(),
             screenshot_ui_open: Default::default(),
             overview_open_close: Default::default(),
+            focus_ring_animation: Default::default(),
         }
     }
 }
@@ -1252,6 +1255,21 @@ impl Default for OverviewOpenCloseAnim {
             }),
         })
     }
+}
+
+// #[derive(Debug, Clone, PartialEq)]
+// pub struct FocusRingAnimation(pub Option<String>);
+
+// impl Default for FocusRingAnimation {
+//     fn default() -> Self {
+//         FocusRingAnimation(None)
+//     }
+// }
+
+#[derive(Debug, knuffel::Decode, Clone, PartialEq, Default)]
+pub struct FocusRingAnimation {
+    #[knuffel(child, unwrap(argument))]
+    pub custom_shader: Option<String>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -3221,6 +3239,38 @@ where
         })?))
     }
 }
+
+// impl<S> knuffel::Decode<S> for FocusRingAnimation
+// where
+//     S: knuffel::traits::ErrorSpan,
+// {
+//     fn decode_node(
+//         node: &knuffel::ast::SpannedNode<S>,
+//         ctx: &mut knuffel::decode::Context<S>,
+//     ) -> Result<Self, DecodeError<S>> {
+//         let mut default = Self::default().0;
+
+//         if &**node.node_name == "focus-ring-animation" {
+//             // let _ = parse_arg_node::<String>("focus-ring-animation", node, ctx);
+//             // node.children
+
+//             // let the_other_node: std::option::Option<_> = node.children.clone().map(|no| {
+//             //     no.iter()
+//             //         .filter(|a| **a.node_name == *"custom-shader")
+//             //         .collect::<Vec<_>>()
+//             // });
+//         }
+//         if &**node.node_name == "custom-shader" {
+//             default = parse_arg_node("custom-shader", node, ctx)?;
+//         }
+
+//         info!("{}", &**node.node_name);
+//         info!("{}", &**node.node_name == "custom-shader");
+//         info!("{:?}", default);
+//         // todo!()
+//         Ok(Self(default))
+//     }
+// }
 
 impl Animation {
     pub fn new_off() -> Self {

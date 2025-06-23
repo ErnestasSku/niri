@@ -8,6 +8,7 @@ use smithay::utils::{Logical, Point, Rectangle, Size};
 use crate::niri_render_elements;
 use crate::render_helpers::border::BorderRenderElement;
 use crate::render_helpers::renderer::NiriRenderer;
+// use crate::render_helpers::shader_element::ShaderRenderElement;
 use crate::render_helpers::solid_color::{SolidColorBuffer, SolidColorRenderElement};
 
 #[derive(Debug)]
@@ -26,6 +27,8 @@ niri_render_elements! {
     FocusRingRenderElement => {
         SolidColor = SolidColorRenderElement,
         Gradient = BorderRenderElement,
+        // TODO: most likely I need to add something here
+        // Shader = ShaderRenderElement
     }
 }
 
